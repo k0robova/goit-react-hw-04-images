@@ -1,54 +1,44 @@
 import React from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import css from './Searchbar.module.css';
 
-export class Searchbar extends React.Component {
-  state = {
-    imageName: '',
+export function Searchbar({ onHandleSearchFormSubmit }) {
+  const [imageName, setImageName] = useState('');
+
+  const handleSearchName = evt => {
+    setImageName(evt.currentTarget.value.toLowerCase());
   };
 
-  handleSearchName = evt => {
-    this.setState({ imageName: evt.currentTarget.value.toLowerCase() });
-  };
-
-  handleSubmitForm = evt => {
+  const handleSubmitForm = evt => {
     evt.preventDefault();
 
-    if (this.state.imageName.trim() === '') {
+    if (imageName.trim() === '') {
       toast.error('Type something in the search field !');
       return;
     }
 
-    this.props.onHandleSearchFormSubmit(this.state.imageName);
-    this.setState({ imageName: '' });
-    // this.resetForm();
+    onHandleSearchFormSubmit(imageName);
+    setImageName('');
   };
 
-  //   resetForm = () => {
-  //     this.setState({
-  //       imageName: '',
-  //     });
-  //   };
-
-  render() {
-    return (
-      <header className={css.searchbar}>
-        <form className={css.form} onSubmit={this.handleSubmitForm}>
-          <input
-            className={css.input}
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            onChange={this.handleSearchName}
-            value={this.state.imageName}
-          />
-          <button type="submit" className={css.button_search}>
-            <span className="button-label">Search</span>
-          </button>
-        </form>
-      </header>
-    );
-  }
+  return (
+    <header className={css.searchbar}>
+      <form className={css.form} onSubmit={handleSubmitForm}>
+        <input
+          className={css.input}
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          onChange={handleSearchName}
+          value={imageName}
+        />
+        <button type="submit" className={css.button_search}>
+          <span className="button-label">Search</span>
+        </button>
+      </form>
+    </header>
+  );
 }

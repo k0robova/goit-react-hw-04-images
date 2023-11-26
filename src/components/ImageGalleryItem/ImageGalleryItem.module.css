@@ -15,4 +15,5 @@
 
 .image_gallery_item:hover .image_gallery_item_image {
   transform: scale(1.03);
+  cursor: pointer;
 }
