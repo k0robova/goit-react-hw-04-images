@@ -77,6 +77,10 @@ export function App() {
 
       {!imageNameTwoQuery && <h2>You can try to find something!</h2>}
 
+      {error ? (
+        <p>Oops! Something went wrong! Please try reloading this page!</p>
+      ) : null}
+
       {loading && <Loader />}
 
       <ImageGallery
